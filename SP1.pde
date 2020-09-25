@@ -22,7 +22,7 @@ void setup()
   font = createFont("Arial", 16, true);
   textFont(font, 16);
 }
-
+// Søren tisser på Kristian.
 void keyReleased()
 {
   game.onKeyReleased(key);
