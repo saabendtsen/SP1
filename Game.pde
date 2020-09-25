@@ -38,7 +38,7 @@ class Game
     enemies = new Dot[numberOfEnemies];
     for(int i = 0; i < numberOfEnemies; ++i)
     {
-      enemies[i] = new Dot(width-1, height-1, width-1, height-1);
+      enemies[i] = new Dot(width/2, height-1, width-1, height-1);
     }
     this.playerLife = 100;
     this.player2Life = 100;
@@ -156,8 +156,25 @@ class Game
       if(rnd.nextInt(3) < 2)
       {
         //We follow
-        int dx = player.getX() - enemies[i].getX();
-        int dy = player.getY() - enemies[i].getY();
+        int dx1 = player.getX() - enemies[i].getX();
+        int dy1 = player.getY() - enemies[i].getY();
+        int dx2 = player2.getX() - enemies[i].getX();
+        int dy2 = player2.getY() - enemies[i].getY();
+        int dx;
+        int dy;
+        
+        // I think the sqrt is irrelevant when we're just comparing values to see which is smaller.
+        // and technically, we don't need abs() because a square is automatically always positive.
+        if(Math.sqrt(Math.pow(abs(dx1),2)+Math.pow(abs(dy1),2))<Math.sqrt(Math.pow(abs(dx2),2)+Math.pow(abs(dy2),2)))
+        {
+          dx=dx1;
+          dy=dy1;
+        }
+        else
+        {
+          dx=dx2;
+          dy=dy2;
+        }
         if(abs(dx) > abs(dy))
         {
           if(dx > 0)
