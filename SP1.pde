@@ -72,4 +72,5 @@ void draw()
   }
   fill(255);
   text("Lifes: "+game.getPlayerLife(), 25,25);
+  text("Lifes: "+game.getPlayer2Life(), width-100,25);
 }
