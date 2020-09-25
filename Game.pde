@@ -29,7 +29,7 @@ class Game
     this.height = height;
     keys = new Keys();
     player = new Dot(0,0,width-1, height-1);
-    player2 = new Dot(width,0,width-1, height-1);
+    player2 = new Dot(width-1,0,width-1, height-1);
     enemies = new Dot[numberOfEnemies];
     for(int i = 0; i < numberOfEnemies; ++i)
     {

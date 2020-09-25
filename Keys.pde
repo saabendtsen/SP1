@@ -1,13 +1,13 @@
 class Keys
 {
-  //private boolean wDown = false;
-  //private boolean aDown = false;
-  //private boolean sDown = false;
-  //private boolean dDown = false;
-  //private boolean arrowsUDown = false;
-  //private boolean arrowsRDown = false;
-  //private boolean arrowsLDown = false;
-  //private boolean arrowsDDown = false;
+  private boolean wDown = false;
+  private boolean aDown = false;
+  private boolean sDown = false;
+  private boolean dDown = false;
+  private boolean arrowsUDown = false;
+  private boolean arrowsRDown = false;
+  private boolean arrowsLDown = false;
+  private boolean arrowsDDown = false;
   
   public Keys(){}
   

@@ -1,4 +1,4 @@
-//Søren Edit 
+
 
 /**
  * Array 2D. 
@@ -13,7 +13,7 @@ import java.util.Random;
 
 Game game = new Game(30, 20, 5);
 PFont font;
-//asdasd
+
 public void settings() {
   size(1201, 801);
 }
@@ -24,8 +24,7 @@ void setup()
   font = createFont("Arial", 16, true);
   textFont(font, 16);
 }
-// Søren tisser på Kristian.
-// Næ jeg gør ikke 
+
 void keyReleased()
 {
   game.onKeyReleased(key);
@@ -75,5 +74,5 @@ void draw()
   }
   fill(255);
   text("Lifes: "+game.getPlayerLife(), 25,25);
-  text("Lifes: "+game.getPlayer2Life(), width-100,25);
+  //text("Lifes: "+game.getPlayer2Life(), width-100,25);
 }
