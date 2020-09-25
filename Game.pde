@@ -8,6 +8,7 @@ class Game
   private int[][] board;
   private Keys keys;
   private int playerLife;
+  private int player2Life;
   private Dot player;
   private Dot player2;
   private Dot[] enemies;
@@ -29,13 +30,18 @@ class Game
     this.height = height;
     keys = new Keys();
     player = new Dot(0,0,width-1, height-1);
+
     player2 = new Dot(0,0,width-1, height-1);
+
+    player2 = new Dot(width-1,0,width-1, height-1);
+
     enemies = new Dot[numberOfEnemies];
     for(int i = 0; i < numberOfEnemies; ++i)
     {
       enemies[i] = new Dot(width-1, height-1, width-1, height-1);
     }
     this.playerLife = 100;
+    this.player2Life = 100;
   }
   
   public int getWidth()
@@ -51,6 +57,11 @@ class Game
   public int getPlayerLife()
   {
     return playerLife;
+  }
+  
+  public int getPlayer2Life()
+  {
+    return player2Life;
   }
   
   public void onKeyPressed(char ch)
@@ -219,6 +230,11 @@ class Game
       {
         //We have a collision
         --playerLife;
+      }
+      if(enemies[i].getX() == player2.getX() && enemies[i].getY() == player2.getY())
+      {
+        //We have a collision
+        --player2Life;
       }
     }
   }
