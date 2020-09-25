@@ -154,12 +154,31 @@ class Game
       if(rnd.nextInt(3) < 2)
       {
         //We follow
-        int dx = player.getX() - enemies[i].getX();
-        int dy = player.getY() - enemies[i].getY();
+        int dx1 = player.getX() - enemies[i].getX();
+        int dy1 = player.getY() - enemies[i].getY();
+        int dx2 = player2.getX() - enemies[i].getX();
+        int dy2 = player2.getY() - enemies[i].getY();
+        int dx = 0;
+        int dy = 0;
+        
+        
+        if (abs(dx1) < abs(dx2)) {
+          dx = dx1;
+        } else {
+          dx = dx2;
+        }
+        if (abs(dy1) < abs(dy2)){
+          dy = dy1;
+        } else {
+          dy = dy2;
+        }
+      
+        
+        
         if(abs(dx) > abs(dy))
         {
           if(dx > 0)
-          {
+          {a
             //Player is to the right
             enemies[i].moveRight();
           }
