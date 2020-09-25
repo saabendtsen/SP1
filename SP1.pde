@@ -23,6 +23,7 @@ void setup()
   textFont(font, 16);
 }
 // Søren tisser på Kristian.
+// Næ jeg gør ikke 
 void keyReleased()
 {
   game.onKeyReleased(key);
