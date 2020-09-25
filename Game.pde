@@ -46,6 +46,8 @@ class Game
   public int getHeight()
   {
     return height;
+    
+    //Sut diller
   }
   
   public int getPlayerLife()
