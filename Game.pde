@@ -229,7 +229,10 @@ class Game
   private void populateBoard()
   {
     //Insert player
-    board[player.getX()][player.getY()] = 1;
+    
+    board[player.getX()][player.getY()]= 1;
+    fill(255);
+    circle(player.getX(),player.getY(),300);
     board[player2.getX()][player2.getY()] = 4;
     //Insert enemies
     for(int i = 0; i < enemies.length; ++i)
