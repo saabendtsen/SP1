@@ -13,7 +13,7 @@ import ddf.minim.*;
 Minim minim;
 AudioPlayer player;
 
-Game game = new Game(30, 20, 0, 5);
+Game game = new Game(30, 20, 5, 5);
 PFont font;
 int screen = 0;
 public int frames = 10;
@@ -37,6 +37,7 @@ void setup()
   
   minim=new Minim(this);
   player=minim.loadFile("music.mp3");
+  player.setGain(-8);
   player.loop();
 }
 
@@ -122,6 +123,15 @@ void draw()
         } else if (board[x][y] == 1)
         {
           fill(0, 0, 255,0);
+          if(game.player.getStealth())
+          {
+            tint(255,127);
+          }
+          else
+          {
+            tint(255);
+          }
+          image(img,(game.player.getX()*40),(game.player.getY()*40));
         } else if (board[x][y] == 2)
         {
           fill(255, 0, 0);
@@ -131,9 +141,18 @@ void draw()
         } else if (board[x][y] == 4)
         {
           fill(255, 255, 0,0);
+          if(game.player2.getStealth())
+          {
+            tint(255,127);
+          }
+          else
+          {
+            tint(255);
+          }
+          image(img2,(game.player2.getX()*40),(game.player2.getY()*40));
         } else if (board[x][y] == 5)
         {
-          fill(255, 0, 255);
+          fill(96, 0, 96);
         } else if (board[x][y] == 6)
         {
           fill(255, 255, 255);
@@ -149,9 +168,13 @@ void draw()
     text("Lifes: "+game.getPlayer2Life(), width-100, 25);
     text("Points: "+game.getPlayerPoints(), 25, 50);
     text("Points: "+game.getPlayer2Points(), width-100, 50);
-    image(img,(game.player.getX()*40),(game.player.getY()*40));
-    image(img2,(game.player2.getX()*40),(game.player2.getY()*40));
-
+    
+    //images moved to the above section because I needed them to be drawn immediately after their tint is set by getStealth();
+    //otherwise they would inconsistently have each other's tint. 
+    //it also means that they're drawn underneath the rects
+    //which I think is more fun. you can't see shit when you're being swarmed.
+    //but we can fix that buy just drawing the rects right after the fills are set.
+    
     //println(frames + " " + frameCount) ;
   }
 }

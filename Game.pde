@@ -16,6 +16,7 @@ class Game
   private Dot[] enemies;
   private Dot[] greenies;
   private Dot[] reverse;
+  private Dot[] stealths;
   private int gamespeed = 0;
   
 
@@ -58,6 +59,10 @@ class Game
     reverse = new Dot[1];
 
     reverse[0] = new Dot(int(random(0, width-1)), int(random(0, height-1)), width-1, height-1);
+    
+    stealths = new Dot[1];
+
+    stealths[0] = new Dot(int(random(0, width-1)), int(random(0, height-1)), width-1, height-1);
 
 
     this.playerLife = 100;
@@ -180,6 +185,10 @@ class Game
     {
       player.moveRight();
     }
+    if(player.getStealth())
+    {
+      player.stealthTimer();
+    }
   }
 
   private void updatePlayer2()
@@ -201,6 +210,10 @@ class Game
     {
       player2.moveRight();
     }
+    if(player2.getStealth())
+    {
+      player2.stealthTimer();
+    }
   }
 
   private void updateEnemies()
@@ -209,69 +222,73 @@ class Game
     {
       //Should we follow or move randomly?
       //2 out of 3 we will follow..
-      if (rnd.nextInt(3) < 2)
-      {
-        //We follow
-        int dx1 = player.getX() - enemies[i].getX();
-        int dy1 = player.getY() - enemies[i].getY();
-        int dx2 = player2.getX() - enemies[i].getX();
-        int dy2 = player2.getY() - enemies[i].getY();
-        int dist1=(int)Math.sqrt(Math.pow(abs(dx1),2)+Math.pow(abs(dy1),2));
-        int dist2=(int)Math.sqrt(Math.pow(abs(dx2),2)+Math.pow(abs(dy2),2));
-        int dx;
-        int dy;
+  
+      //We follow
+      int dx1 = player.getX() - enemies[i].getX();
+      int dy1 = player.getY() - enemies[i].getY();
+      int dx2 = player2.getX() - enemies[i].getX();
+      int dy2 = player2.getY() - enemies[i].getY();
+      int dist1=(int)Math.sqrt(Math.pow(abs(dx1),2)+Math.pow(abs(dy1),2));
+      int dist2=(int)Math.sqrt(Math.pow(abs(dx2),2)+Math.pow(abs(dy2),2));
+      int dx;
+      int dy;
+      
+      // it stopped allowing dx and dy to be initialised empty after I added stealth.
+      
+      //technically I think you can run into some bad roundings where player2 would be targeted unfairly
+      //if the rounded distances are the same, then they target player2.
 
-        // I think the sqrt is irrelevant when we're just comparing values to see which is smaller.
-        // and technically, we don't need abs() because a square is automatically always positive.
-        if (dist1<dist2)
-        {
-          dx=dx1;
-          dy=dy1;
-        } else
-        {
-          dx=dx2;
-          dy=dy2;
-        }
-        if (abs(dx) > abs(dy))
-        {
-          if (dx > 0)
-          {
-            //Player is to the right
-            enemies[i].moveRight();
-          } else
-          {
-            //Player is to the left
-            enemies[i].moveLeft();
-          }
-        } else if (dy > 0)
-        {
-          //Player is down;
-          enemies[i].moveDown();
-        } else
-        {//Player is up;
-          enemies[i].moveUp();
-        }
+      if(player.getStealth())
+      {
+        dx=dx2;
+        dy=dy2;
+      }
+      else if(player2.getStealth())
+      {
+        dx=dx1;
+        dy=dy1;
+      }
+      else if (dist1<dist2)
+      {
+        dx=dx1;
+        dy=dy1;
       } else
       {
-        //We move randomly
-        int move = rnd.nextInt(4);
-        if (move == 0)
+        dx=dx2;
+        dy=dy2;
+      }
+      if(!(player.getStealth()&&player2.getStealth()))
+      {
+        if (rnd.nextInt(3) < 2)
         {
-          //Move right
-          enemies[i].moveRight();
-        } else if (move == 1)
-        {
-          //Move left
-          enemies[i].moveLeft();
-        } else if (move == 2)
-        {
-          //Move up
-          enemies[i].moveUp();
-        } else if (move == 3)
-        {
-          //Move down
-          enemies[i].moveDown();
+          if (abs(dx) > abs(dy))
+          {
+            if (dx > 0)
+            {
+              //Player is to the right
+              enemies[i].moveRight();
+            } else
+            {
+              //Player is to the left
+              enemies[i].moveLeft();
+            }
+          } else if (dy > 0)
+          {
+            //Player is down;
+            enemies[i].moveDown();
+          } else
+          {//Player is up;
+            enemies[i].moveUp();
+          }
         }
+        else
+        {
+          moveRandom(enemies[i]);
+        }
+      }
+      else
+      {
+        moveRandom(enemies[i]);
       }
     }
   }
@@ -290,7 +307,20 @@ class Game
       int dy;
       int dist;
       
-      if (dist1<dist2)
+
+      if(player.getStealth())
+      {
+        dx=dx2;
+        dy=dy2;
+        dist=dist2;
+      }
+      else if(player2.getStealth())
+      {
+        dx=dx1;
+        dy=dy1;
+        dist=dist1;
+      }
+      else if (dist1<dist2)
       {
         dx=dx1;
         dy=dy1;
@@ -301,9 +331,9 @@ class Game
         dy=dy2;
         dist=dist2;
       }
-      
+    
       // if within distance, they'll flee with random movement thrown in, like the enemies.
-      if(dist<=5)
+      if(dist<=5&!(player.getStealth()&&player2.getStealth()))
       {
         //Should we flee or move randomly?
         //2 out of 3 we will follow..
@@ -332,50 +362,37 @@ class Game
           }
         } else
         {
-          //We move randomly
-          int move = rnd.nextInt(4);
-          if (move == 0)
-          {
-            //Move right
-            greenies[i].moveRight();
-          } else if (move == 1)
-          {
-            //Move left
-            greenies[i].moveLeft();
-          } else if (move == 2)
-          {
-            //Move up
-            greenies[i].moveUp();
-          } else if (move == 3)
-          {
-            //Move down
-            greenies[i].moveDown();
-          }
+          moveRandom(greenies[i]);
         }
       }
       // if outside distance, they'll stand around with random movement thrown in. numbers can be changed to taste.
       else if(rnd.nextInt(10)<1)
       {
-        //We move randomly
-        int move = rnd.nextInt(4);
-        if (move == 0)
-        {
-          //Move right
-          greenies[i].moveRight();
-        } else if (move == 1)
-        {
-          //Move left
-          greenies[i].moveLeft();
-        } else if (move == 2)
-        {
-          //Move up
-          greenies[i].moveUp();
-        } else if (move == 3)
-        {
-          //Move down
-          greenies[i].moveDown();
-        }
+        moveRandom(greenies[i]);
       }
+    }
+  }
+  
+  private void moveRandom(Dot object)
+  {
+   //We move randomly
+    int move = rnd.nextInt(4);
+    if (move == 0)
+    {
+      //Move right
+      object.moveRight();
+    } else if (move == 1)
+    {
+      //Move left
+      object.moveLeft();
+    } else if (move == 2)
+    {
+      //Move up
+      object.moveUp();
+    } else if (move == 3)
+    {
+      //Move down
+      object.moveDown();
     }
   }
 
@@ -395,6 +412,7 @@ class Game
       board[greenies[i].getX()][greenies[i].getY()] = 3;
     }
     
+    board[stealths[0].getX()][stealths[0].getY()]=5;
     board[reverse[0].getX()][reverse[0].getY()] = 6;
   }
 
@@ -437,6 +455,18 @@ class Game
         screen = 1;
       }
     }
+    
+    //Check Stealth collision.
+    if(stealths[0].getX()==player.getX()&&stealths[0].getY()==player.getY())
+    {
+      player.stealth();
+      stealths[0] = new Dot(int(random(0, width-1)), int(random(0, height-1)), width-1, height-1);
+    }
+    if(stealths[0].getX()==player2.getX()&&stealths[0].getY()==player2.getY())
+    {
+      player2.stealth();
+      stealths[0] = new Dot(int(random(0, width-1)), int(random(0, height-1)), width-1, height-1);
+    }
   
     
     //Check reverse collision
@@ -444,11 +474,13 @@ class Game
     {
       keys.player2Reverse = true;
       keys.playerReverse = false;
+      keys.allKeysUp2();
       reverse[0] = new Dot(int(random(0, width-1)), int(random(0, height-1)), width-1, height-1);
     }
     if(reverse[0].getX() == player2.getX() && reverse[0].getY() == player2.getY() && keys.player2Reverse == false) {
       keys.player2Reverse = false;
       keys.playerReverse = true;
+      keys.allKeysUp1();
       reverse[0] = new Dot(int(random(0, width-1)), int(random(0, height-1)), width-1, height-1);
     }
   if (reverse[0].getX() == player.getX() && reverse[0].getY() == player.getY() && keys.playerReverse == true) 
