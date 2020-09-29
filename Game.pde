@@ -127,7 +127,9 @@ class Game
     playerLife = 100;
     player2Life = 100;
     playerPoints = 0;
-    player2Points = 0; 
+    player2Points = 0;
+    keys.playerReverse=false;
+    keys.player2Reverse=false;
     for (int i = 0; i < greenies.length; ++i)
     {
       greenies[i] = new Dot((width-1)/2, (height-1)/2, width-1, height-1);
@@ -214,12 +216,14 @@ class Game
         int dy1 = player.getY() - enemies[i].getY();
         int dx2 = player2.getX() - enemies[i].getX();
         int dy2 = player2.getY() - enemies[i].getY();
+        int dist1=(int)Math.sqrt(Math.pow(abs(dx1),2)+Math.pow(abs(dy1),2));
+        int dist2=(int)Math.sqrt(Math.pow(abs(dx2),2)+Math.pow(abs(dy2),2));
         int dx;
         int dy;
 
         // I think the sqrt is irrelevant when we're just comparing values to see which is smaller.
         // and technically, we don't need abs() because a square is automatically always positive.
-        if (Math.sqrt(Math.pow(abs(dx1), 2)+Math.pow(abs(dy1), 2))<Math.sqrt(Math.pow(abs(dx2), 2)+Math.pow(abs(dy2), 2)))
+        if (dist1<dist2)
         {
           dx=dx1;
           dy=dy1;
@@ -276,88 +280,81 @@ class Game
   {
     for (int i = 0; i < greenies.length; ++i)
     {
-      //Should we flee or move randomly?
-      //2 out of 3 we will follow..
-      if (rnd.nextInt(3) < 2)
+      int dx1 = player.getX() - greenies[i].getX();
+      int dy1 = player.getY() - greenies[i].getY();
+      int dx2 = player2.getX() - greenies[i].getX();
+      int dy2 = player2.getY() - greenies[i].getY();
+      int dist1=(int)Math.sqrt(Math.pow(abs(dx1),2)+Math.pow(abs(dy1),2));
+      int dist2=(int)Math.sqrt(Math.pow(abs(dx2),2)+Math.pow(abs(dy2),2));
+      int dx;
+      int dy;
+      int dist;
+      
+      if (dist1<dist2)
       {
-        //We flee
-        int dx = player.getX() - greenies[i].getX();
-        int dy = player.getY() - greenies[i].getY();
-        if (abs(dx) > abs(dy))
-        {
-          if (dx > 0)
-          {
-            //Player is to the right
-            greenies[i].moveLeft();
-          } else
-          {
-            //Player is to the left
-            greenies[i].moveRight();
-          }
-        } else if (dy > 0)
-        {
-          //Player is down;
-          greenies[i].moveUp();
-        } else
-        {
-          //Player is up;
-          greenies[i].moveDown();
-        }
+        dx=dx1;
+        dy=dy1;
+        dist=dist1;
       } else
       {
-        //We move randomly
-        int move = rnd.nextInt(4);
-        if (move == 0)
+        dx=dx2;
+        dy=dy2;
+        dist=dist2;
+      }
+      
+      // if within distance, they'll flee with random movement thrown in, like the enemies.
+      if(dist<=5)
+      {
+        //Should we flee or move randomly?
+        //2 out of 3 we will follow..
+        if (rnd.nextInt(3) < 2)
         {
-          //Move right
-          greenies[i].moveRight();
-        } else if (move == 1)
+          //We flee
+          if (abs(dx) > abs(dy))
+          {
+            if (dx > 0)
+            {
+              //Player is to the right
+              greenies[i].moveLeft();
+            } else
+            {
+              //Player is to the left
+              greenies[i].moveRight();
+            }
+          } else if (dy > 0)
+          {
+            //Player is down;
+            greenies[i].moveUp();
+          } else
+          {
+            //Player is up;
+            greenies[i].moveDown();
+          }
+        } else
         {
-          //Move left
-          greenies[i].moveLeft();
-        } else if (move == 2)
-        {
-          //Move up
-          greenies[i].moveUp();
-        } else if (move == 3)
-        {
-          //Move down
-          greenies[i].moveDown();
+          //We move randomly
+          int move = rnd.nextInt(4);
+          if (move == 0)
+          {
+            //Move right
+            greenies[i].moveRight();
+          } else if (move == 1)
+          {
+            //Move left
+            greenies[i].moveLeft();
+          } else if (move == 2)
+          {
+            //Move up
+            greenies[i].moveUp();
+          } else if (move == 3)
+          {
+            //Move down
+            greenies[i].moveDown();
+          }
         }
       }
-    }
-
-    //update for player2
-    for (int i = 0; i < greenies.length; ++i)
-    {
-      //Should we flee or move randomly?
-      //2 out of 3 we will follow..
-      if (rnd.nextInt(3) < 2)
-      {
-        //We flee
-        int dx = player2.getX() - greenies[i].getX();
-        int dy = player2.getY() - greenies[i].getY();
-        if (abs(dx) > abs(dy))
-        {
-          if (dx > 0)
-          {
-            //Player is to the right
-            greenies[i].moveLeft();
-          } else
-          {
-            //Player is to the left
-            greenies[i].moveRight();
-          }
-        } else if (dy > 0)
-        {
-          //Player is down;
-          greenies[i].moveUp();
-        } else
-        {
-          //Player is up;
-          greenies[i].moveDown();
-        }
-      } else
+      // if outside distance, they'll stand around with random movement thrown in. numbers can be changed to taste.
+      else if(rnd.nextInt(10)<1)
       {
         //We move randomly
         int move = rnd.nextInt(4);
@@ -458,12 +455,14 @@ class Game
     {
       keys.player2Reverse = false;
       keys.playerReverse = false;
+      keys.allKeysUp1();
       reverse[0] = new Dot(int(random(0, width-1)), int(random(0, height-1)), width-1, height-1);
     }
     if (reverse[0].getX() == player2.getX() && reverse[0].getY() == player2.getY() && keys.player2Reverse == true) 
     {
       keys.player2Reverse = false;
       keys.playerReverse = false;
+      keys.allKeysUp2();
       reverse[0] = new Dot(int(random(0, width-1)), int(random(0, height-1)), width-1, height-1);
     }
   }

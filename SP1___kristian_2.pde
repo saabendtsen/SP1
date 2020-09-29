@@ -8,8 +8,12 @@
  */
 
 import java.util.Random;
+import ddf.minim.*;
 
-Game game = new Game(30, 20, 0, 10);
+Minim minim;
+AudioPlayer player;
+
+Game game = new Game(30, 20, 0, 5);
 PFont font;
 int screen = 0;
 public int frames = 10;
@@ -26,10 +30,14 @@ void setup()
   frameRate(frames);
   font = createFont("Arial", 16, true);
   textFont(font, 16);
-  img = loadImage("sprite1.png");
+  img = loadImage("sprite1_alpha_resize2.png");
   img.resize(40,40);
-  img2 = loadImage("sprite2.png");
+  img2 = loadImage("sprite2_alpha_resize2.png");
   img2.resize(40,40);
+  
+  minim=new Minim(this);
+  player=minim.loadFile("music.mp3");
+  player.play();
 }
 
 void keyReleased()
@@ -65,8 +73,8 @@ void draw()
     background(0);
     textAlign(CENTER);
     textSize(100);
-    fill(0, 0, 255);
-    text("BLUE WINS!", width/2, height/2);
+    fill(96,96,255);
+    text("BOY WINS!", width/2,height/2);
     fill(255);
     textSize(40);
 
@@ -83,8 +91,8 @@ void draw()
     background(0);
     textAlign(CENTER);
     textSize(100);
-    fill(255, 255, 0);
-    text("YELLOW WINS!", width/2, height/2);
+    fill(255, 96, 255);
+    text("GIRL WINS!",width/2,height/2);
     fill(255);
     textSize(40);
 
@@ -113,7 +121,7 @@ void draw()
           fill(0, 0, 0);
         } else if (board[x][y] == 1)
         {
-          fill(0, 0, 255);
+          fill(0, 0, 255,0);
         } else if (board[x][y] == 2)
         {
           fill(255, 0, 0);
@@ -122,7 +130,7 @@ void draw()
           fill(0, 255, 0);
         } else if (board[x][y] == 4)
         {
-          fill(255, 255, 0);
+          fill(255, 255, 0,0);
         } else if (board[x][y] == 5)
         {
           fill(255, 0, 255);
