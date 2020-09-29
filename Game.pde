@@ -146,6 +146,7 @@ class Game
     player = new Dot(0, 0, width-1, height-1);
     player2 = new Dot(width-1, 0, width-1, height-1);
     reverse[0] = new Dot(int(random(0, width-1)), int(random(0, height-1)), width-1, height-1);
+    stealths[0] = new Dot(int(random(0, width-1)), int(random(0, height-1)), width-1, height-1);
     frames = 10;
   }
 
