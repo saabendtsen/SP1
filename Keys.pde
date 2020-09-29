@@ -8,6 +8,8 @@ class Keys
   private boolean arrowsRDown = false;
   private boolean arrowsLDown = false;
   private boolean arrowsDDown = false;
+  public boolean playerReverse = false;
+  public boolean player2Reverse = false;
   
   public Keys(){}
   
@@ -54,6 +56,8 @@ class Keys
   
   void onKeyPressed(char ch)
   {
+    if(playerReverse == false){
+    
     if(ch == 'W' || ch == 'w')
     {
       wDown = true;
@@ -70,11 +74,33 @@ class Keys
     {
       dDown = true;
     }
+    }
+     if(playerReverse == true){
+    
+    if(ch == 'W' || ch == 'w')
+    {
+      sDown = true;
+    }
+    else if (ch == 'A' || ch == 'a')
+    {
+      dDown = true;
+    }
+    else if(ch == 'S' || ch == 's')
+    {
+      wDown = true;
+    }
+    else if(ch == 'D' || ch == 'd')
+    {
+      aDown = true;
+    }
+    }
     
   }
   
   void onKeyReleased(char ch)
   {
+   if(playerReverse == false){
+    
     if(ch == 'W' || ch == 'w')
     {
       wDown = false;
@@ -91,12 +117,33 @@ class Keys
     {
       dDown = false;
     }
+    }
+     if(playerReverse == true){
+    
+    if(ch == 'W' || ch == 'w')
+    {
+      sDown = false;
+    }
+    else if (ch == 'A' || ch == 'a')
+    {
+      dDown = false;
+    }
+    else if(ch == 'S' || ch == 's')
+    {
+      wDown = false;
+    }
+    else if(ch == 'D' || ch == 'd')
+    {
+      aDown = false;
+    }
+    }
   }
 
 
 
  void onKeyPressed()
   {
+    if(player2Reverse == false) {
     if(keyCode == UP)
     {
       arrowsUDown = true;
@@ -113,10 +160,30 @@ class Keys
     {
       arrowsRDown = true;
     }
+    }
+    
+    else {
+     if(keyCode == UP) {
+      arrowsDDown = true;
+    }
+    if(keyCode == DOWN)
+    {
+      arrowsUDown = true;
+    }
+    if(keyCode == LEFT)
+    {
+      arrowsRDown = true;
+    }
+    if(keyCode == RIGHT)
+    {
+      arrowsLDown = true;
+    }
+    }
   }
   
   void onKeyReleased()
   {
+        if(player2Reverse == false) {
     if(keyCode == UP)
     {
       arrowsUDown = false;
@@ -132,6 +199,25 @@ class Keys
     if(keyCode == RIGHT)
     {
       arrowsRDown = false;
+    }
+    }
+    
+    else {
+     if(keyCode == UP) {
+      arrowsDDown = false;
+    }
+    if(keyCode == DOWN)
+    {
+      arrowsUDown = false;
+    }
+    if(keyCode == LEFT)
+    {
+      arrowsRDown = false;
+    }
+    if(keyCode == RIGHT)
+    {
+      arrowsLDown = false;
+    }
     }
   }
 }
