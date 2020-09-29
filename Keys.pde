@@ -8,6 +8,8 @@ class Keys
   private boolean arrowsRDown = false;
   private boolean arrowsLDown = false;
   private boolean arrowsDDown = false;
+  public boolean playerReverse = false;
+  public boolean player2Reverse = false;
   
   public Keys(){}
   
@@ -54,42 +56,81 @@ class Keys
   
   void onKeyPressed(char ch)
   {
-    if(ch == 'W' || ch == 'w')
-    {
-      wDown = true;
+    if(playerReverse == false){
+      if(ch == 'W' || ch == 'w')
+      {
+        wDown = true;
+      }
+      else if (ch == 'A' || ch == 'a')
+      {
+        aDown = true;
+      }
+      else if(ch == 'S' || ch == 's')
+      {
+        sDown = true;
+      }
+      else if(ch == 'D' || ch == 'd')
+      {
+        dDown = true;
+      }
     }
-    else if (ch == 'A' || ch == 'a')
-    {
-      aDown = true;
+    if(playerReverse == true){
+      if(ch == 'W' || ch == 'w')
+      {
+        sDown = true;
+      }
+      else if (ch == 'A' || ch == 'a')
+      {
+        dDown = true;
+      }
+      else if(ch == 'S' || ch == 's')
+      {
+        wDown = true;
+      }
+      else if(ch == 'D' || ch == 'd')
+      {
+        aDown = true;
+      }
     }
-    else if(ch == 'S' || ch == 's')
-    {
-      sDown = true;
-    }
-    else if(ch == 'D' || ch == 'd')
-    {
-      dDown = true;
-    }
-    
   }
   
   void onKeyReleased(char ch)
   {
-    if(ch == 'W' || ch == 'w')
-    {
-      wDown = false;
+    if(playerReverse == false){
+      if(ch == 'W' || ch == 'w')
+      {
+        wDown = false;
+      }
+      else if (ch == 'A' || ch == 'a')
+      {
+        aDown = false;
+      }
+      else if(ch == 'S' || ch == 's')
+      {
+        sDown = false;
+      }
+      else if(ch == 'D' || ch == 'd')
+      {
+        dDown = false;
+      }
     }
-    else if (ch == 'A' || ch == 'a')
-    {
-      aDown = false;
-    }
-    else if(ch == 'S' || ch == 's')
-    {
-      sDown = false;
-    }
-    else if(ch == 'D' || ch == 'd')
-    {
-      dDown = false;
+    if(playerReverse == true){
+      if(ch == 'W' || ch == 'w')
+      {
+        sDown = false;
+      }
+      else if (ch == 'A' || ch == 'a')
+      {
+        dDown = false;
+      }
+      else if(ch == 'S' || ch == 's')
+      {
+        wDown = false;
+      }
+      else if(ch == 'D' || ch == 'd')
+      {
+        aDown = false;
+      }
     }
   }
 
@@ -97,26 +138,47 @@ class Keys
 
  void onKeyPressed()
   {
-    if(keyCode == UP)
-    {
-      arrowsUDown = true;
+    if(player2Reverse == false) {
+      if(keyCode == UP)
+      {
+        arrowsUDown = true;
+      }
+      if(keyCode == DOWN)
+      {
+        arrowsDDown = true;
+      }
+      if(keyCode == LEFT)
+      {
+        arrowsLDown = true;
+      }
+      if(keyCode == RIGHT)
+      {
+        arrowsRDown = true;
+      }
+    }
+    
+    else {
+     if(keyCode == UP) {
+      arrowsDDown = true;
     }
     if(keyCode == DOWN)
     {
-      arrowsDDown = true;
+      arrowsUDown = true;
     }
     if(keyCode == LEFT)
     {
-      arrowsLDown = true;
+      arrowsRDown = true;
     }
     if(keyCode == RIGHT)
     {
-      arrowsRDown = true;
+      arrowsLDown = true;
+    }
     }
   }
   
   void onKeyReleased()
   {
+    if(player2Reverse == false) {
     if(keyCode == UP)
     {
       arrowsUDown = false;
@@ -133,5 +195,40 @@ class Keys
     {
       arrowsRDown = false;
     }
+    }
+    
+    else {
+     if(keyCode == UP) {
+      arrowsDDown = false;
+    }
+    if(keyCode == DOWN)
+    {
+      arrowsUDown = false;
+    }
+    if(keyCode == LEFT)
+    {
+      arrowsRDown = false;
+    }
+    if(keyCode == RIGHT)
+    {
+      arrowsLDown = false;
+    }
+    }
+  }
+  
+  public void allKeysUp1()
+  {
+    wDown = false;
+    aDown = false;
+    sDown = false;
+    dDown = false;
+  }
+  
+  public void allKeysUp2()
+  {
+    arrowsUDown = false;
+    arrowsRDown = false;
+    arrowsLDown = false;
+    arrowsDDown = false;
   }
 }
