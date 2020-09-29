@@ -37,7 +37,7 @@ void setup()
   
   minim=new Minim(this);
   player=minim.loadFile("music.mp3");
-  player.play();
+  player.loop();
 }
 
 void keyReleased()
