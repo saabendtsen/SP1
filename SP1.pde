@@ -37,7 +37,7 @@ void setup()
   
   minim=new Minim(this);
   player=minim.loadFile("music.mp3");
-  player.setGain(-8);
+  player.setGain(-12);
   player.loop();
 }
 
@@ -123,7 +123,7 @@ void draw()
         } else if (board[x][y] == 1)
         {
           fill(0, 0, 255,0);
-          if(game.player.getStealth())
+          if(game.player.getTransparent())
           {
             tint(255,127);
           }
@@ -141,7 +141,7 @@ void draw()
         } else if (board[x][y] == 4)
         {
           fill(255, 255, 0,0);
-          if(game.player2.getStealth())
+          if(game.player2.getTransparent())
           {
             tint(255,127);
           }
@@ -174,6 +174,8 @@ void draw()
     //it also means that they're drawn underneath the rects
     //which I think is more fun. you can't see shit when you're being swarmed.
     //but we can fix that buy just drawing the rects right after the fills are set.
+    //come to think of it, we don't need to have the tints up there since they are pulled directly from the objects, not from the array,
+    //which is how the imgs were down here in the first place.
     
     //println(frames + " " + frameCount) ;
   }
