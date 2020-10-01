@@ -17,7 +17,7 @@ class Game
   private Dot[] greenies;
   private Dot[] reverse;
   private Dot[] stealths;
-  private int gamespeed = 0;
+  private int timer=millis()+10000;
   
 
 
@@ -90,12 +90,20 @@ class Game
     updateEnemies();
     updateGreenies();
     checkForCollisions();
+    winCondition();
     clearBoard();
     populateBoard();
-        if (frameCount%100 == 0) {
-      frames = frames+gamespeed;
-      frameRate(frames);
-    } 
+    gameSpeed();
+    frameRate(frames);
+  }
+  
+  private void gameSpeed()
+  {
+    if (millis()>timer)
+    {
+      timer=millis()+10000;
+      frames+=1;
+    }
   }
 
   public void reset() 
@@ -423,13 +431,6 @@ class Game
         player2Points = player2Points + 10;
         greenies[i] = new Dot(int(random(0, width-1)), int(random(0, height-1)), width-1, height-1);
       }
-      if (game.getPlayerPoints() >= 1000 || game.getPlayer2Life() <= 0) {
-        screen = 2;
-      } else if (game.getPlayer2Points() >= 1000 || game.getPlayerLife() <= 0) {
-        screen = 3;
-      } else {
-        screen = 1;
-      }
     }
     
     //Check Stealth collision.
@@ -472,6 +473,16 @@ class Game
       keys.playerReverse = false;
       keys.allKeysUp2();
       reverse[0] = new Dot(int(random(0, width-1)), int(random(0, height-1)), width-1, height-1);
+    }
+  }
+  private void winCondition()
+  {
+    if (game.getPlayerPoints() >= 200 || game.getPlayer2Life() <= 0) {
+      screen = 2;
+    } else if (game.getPlayer2Points() >= 200 || game.getPlayerLife() <= 0) {
+      screen = 3;
+    } else {
+      screen = 1;
     }
   }
 }

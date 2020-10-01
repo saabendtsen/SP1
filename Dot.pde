@@ -56,7 +56,7 @@ class Dot
         timer=frameCount+10*0.25;
         this.transparent=!this.transparent;
         timerCycle++;
-        if(timerCycle>=4)
+        if(timerCycle>=2)
         {
           timer=frameCount+10*0.25;
           timerCycle=0;
@@ -71,7 +71,7 @@ class Dot
         timer=frameCount+10*0.125;
         this.transparent=!this.transparent;
         timerCycle++;
-        if(timerCycle>=8)
+        if(timerCycle>=4)
         {
           timer=frameCount+10*0.125;
           timerCycle=0;
