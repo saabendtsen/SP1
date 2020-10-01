@@ -34,7 +34,6 @@ void setup()
   img.resize(40,40);
   img2 = loadImage("sprite2_alpha_resize2.png");
   img2.resize(40,40);
-  
   minim=new Minim(this);
   player=minim.loadFile("music.mp3");
   player.setGain(-12);
