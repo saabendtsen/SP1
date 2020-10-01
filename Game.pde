@@ -37,38 +37,10 @@ class Game
     this.height = height;
     keys = new Keys();
 
-
-
-    player = new Dot(0, 0, width-1, height-1);
-    player2 = new Dot(width-1, 0, width-1, height-1);
-
-
     enemies = new Dot[numberOfEnemies];
-    for (int i = 0; i < numberOfEnemies; ++i)
-    {
-      enemies[i] = new Dot(width-1, height-1, width-1, height-1);
-    }
-
     greenies = new Dot[numberOfGreenies];
-    for (int i = 0; i < numberOfGreenies; ++i)
-    {
-      greenies[i] = new Dot(width-1, height-1, width-1, height-1);
-    }
-
-    
     reverse = new Dot[1];
-
-    reverse[0] = new Dot(int(random(0, width-1)), int(random(0, height-1)), width-1, height-1);
-    
     stealths = new Dot[1];
-
-    stealths[0] = new Dot(int(random(0, width-1)), int(random(0, height-1)), width-1, height-1);
-
-
-    this.playerLife = 100;
-    this.player2Life = 100;
-    this.playerPoints = 0;
-    this.player2Points = 0;
   }
 
   public int getWidth()
@@ -135,14 +107,17 @@ class Game
     player2Points = 0;
     keys.playerReverse=false;
     keys.player2Reverse=false;
+    
     for (int i = 0; i < greenies.length; ++i)
     {
       greenies[i] = new Dot((width-1)/2, (height-1)/2, width-1, height-1);
     }
+    
     for (int i = 0; i < enemies.length; ++i)
     {
       enemies[i] = new Dot((width-1)/2, height-1, width-1, height-1);
     }
+    
     player = new Dot(0, 0, width-1, height-1);
     player2 = new Dot(width-1, 0, width-1, height-1);
     reverse[0] = new Dot(int(random(0, width-1)), int(random(0, height-1)), width-1, height-1);

@@ -6,7 +6,7 @@ class Dot
   private final int maxY;
   private boolean stealth=false;
   private boolean transparent=false;
-  private int timer;
+  private float timer;
   private int timerStep=0;
   private int timerCycle=0;
 
@@ -40,7 +40,7 @@ class Dot
 
   public void stealth()
   {
-    timer=millis()+3000;
+    timer=frameCount+10*0.5;
     timerStep=1;
     this.stealth=true;
     this.transparent=true;
@@ -50,14 +50,14 @@ class Dot
   {
     if(timerStep==1)
     {
-      if(millis()>timer)
+      if(frameCount>timer)
       {
-        timer=millis()+500;
+        timer=frameCount+10*0.25;
         this.transparent=!this.transparent;
         timerCycle++;
-        if(timerCycle==2)
+        if(timerCycle==4)
         {
-          timer=millis()+500;
+          timer=frameCount+10*0.25;
           timerCycle=0;
           timerStep=2;
         }
@@ -65,14 +65,14 @@ class Dot
     }
     if(timerStep==2)
     {
-      if(millis()>timer)
+      if(frameCount>timer)
       {
-        timer=millis()+250;
+        timer=frameCount+10*0.125;
         this.transparent=!this.transparent;
         timerCycle++;
-        if(timerCycle==4)
+        if(timerCycle==8)
         {
-          timer=millis()+250;
+          timer=frameCount+10*0.125;
           timerCycle=0;
           timerStep=3;
         }
@@ -80,7 +80,7 @@ class Dot
     }
     if(timerStep==3)
     {
-      if(millis()>timer)
+      if(frameCount>timer)
       {
         this.transparent=false;
         this.stealth=false;
