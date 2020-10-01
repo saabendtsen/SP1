@@ -17,7 +17,7 @@ class Game
   private Dot[] greenies;
   private Dot[] reverse;
   private Dot[] stealths;
-  private int timer=millis()+10000;
+  private int timer;
   
 
 
@@ -96,15 +96,6 @@ class Game
     gameSpeed();
     frameRate(frames);
   }
-  
-  private void gameSpeed()
-  {
-    if (millis()>timer)
-    {
-      timer=millis()+10000;
-      frames+=1;
-    }
-  }
 
   public void reset() 
   {
@@ -130,7 +121,17 @@ class Game
     player2 = new Dot(width-1, 0, width-1, height-1);
     reverse[0] = new Dot(int(random(0, width-1)), int(random(0, height-1)), width-1, height-1);
     stealths[0] = new Dot(int(random(0, width-1)), int(random(0, height-1)), width-1, height-1);
+    timer=millis()+10000;
     frames = 10;
+  }
+  
+  private void gameSpeed()
+  {
+    if (millis()>timer)
+    {
+      timer=millis()+10000;
+      frames+=1;
+    }
   }
 
   public int[][] getBoard()
