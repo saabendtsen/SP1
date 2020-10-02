@@ -448,9 +448,9 @@ class Game
         player2Points = player2Points + 10;
         greenies[i] = new Dot(int(random(0, width-1)), int(random(0, height-1)), width-1, height-1);
       }
-      if (game.getPlayerPoints() >= 100 || game.getPlayer2Life() <= 0) {
+      if (game.getPlayerPoints() >= 1000 || game.getPlayer2Life() <= 0) {
         screen = 2;
-      } else if (game.getPlayer2Points() >= 100 || game.getPlayerLife() <= 0) {
+      } else if (game.getPlayer2Points() >= 1000 || game.getPlayerLife() <= 0) {
         screen = 3;
       } else {
         screen = 1;
